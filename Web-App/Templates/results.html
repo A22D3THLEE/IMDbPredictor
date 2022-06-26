@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+{% block main %}
+
+        <div class="row" style="background-color:rgb(224, 224, 224);margin-left: 30px;margin-top: 100px;background-color: white" >
+        <h2>All results</h2>
+
+            <table class="table" style="background-color:rgb(224, 224, 224);margin-left: 30px;margin-right: 150px">
+                <thead>
+                <tr style="background-color: #ffa132">
+                <th scope="col">#</th>
+                <th scope="col">Review</th>
+                <th scope="col">Predictions</th>
+                <th scope="col">Approximate rating</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for data in dataset %}
+                    <tr>
+                    <th scope="row">{{ data.id }}</th>
+                    <td>{{ data.text }}</td>
+                    <td>{{ data.classification }}</td>
+                    <td>{{ data.rating }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+{% endblock %}

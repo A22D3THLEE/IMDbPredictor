@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load static %}
+{% block main %}
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" role="document"  >
+        <div class="modal-content" style="background-color: #ffffff ; border-radius: 10px">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Prediction:</h5>
+                <button  type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" >
+                <div>Your review is  <span id="class"></span></div>
+                <div id="prediction"></div>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-primary" href="/results" role="button" style="border-radius: 10px">Data Base</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="intro">
+    <div class="container">
+        <div class="intro__inner">
+
+            <div class="intro__logo"><a href="/"><img  src={% static 'predictor/images/horizontal_logo.png' %} style="display:block;margin:auto;margin-top:80px;margin-bottom:20px" width="50%" alt="mini-logo"></a></div>
+        </div>
+    </div>
+    <div class="rectangle_content" style="display:block;margin:auto;margin-top: -30px">
+        <div class="text">
+            <h3 style="font-size: 20px">This machine learning model is able to determine the tone of your movie review.</h3>
+            <form action="" id="post-form">
+                {% csrf_token %}
+                <div class="form-group" style="display:block;margin:auto;">
+                   <a class="text_review"><textarea name="review" id="review" cols="70" rows="10" placeholder="Write your review here..." style="outline: none"></textarea></a>
+                </div>
+                <a class="predict"><button class="btn btn-primary" data-toggle="modal"  data-target="#exampleModal" style="border-radius: 10px;margin-top: 10px">Prediction...</button></a>
+            </form>
+            </div>
+            </div>
+
+      </div>
+<script>
+
+    $(document).on('submit', '#post-form',function(e){
+       e.preventDefault();
+       $.ajax({
+            type:'POST',
+            url:'{% url "predict:submit_prediction" %}',
+            data:{
+                review:$('#review').val(),
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                action: 'post'
+           },
+            success:function(json) {
+                document.forms["post-form"].reset();
+                document.getElementById("class").innerHTML = json['classification']
+            },
+            error : function(xhr,errmsg,err) {
+            }
+        });
+    })
+</script>
+{% endblock %}
