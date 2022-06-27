@@ -42,3 +42,8 @@ history = model.fit(x_train,
                     callbacks=[checkpoint_callback])
 
 
+model.load_weights(model_save_path)
+test = pd.read_csv('test.csv', header=None, names=['Class', 'Review'])
+x_test = pad_sequences(test, maxlen=max_review_len)
+y_test = test['Class'] - 1
+model.evaluate(x_test, y_test, verbose=1)
