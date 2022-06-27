@@ -1,5 +1,4 @@
 import string
-import pandas as pd
 import nltk
 import spacy
 nltk.download('punkt')
@@ -10,7 +9,6 @@ from keras.utils.data_utils import pad_sequences
 from predict.models import PredResults
 from keras.models import load_model
 from nltk import word_tokenize
-from keras.preprocessing.text import Tokenizer
 from predict.load_data import load
 
 dictionary= load()
