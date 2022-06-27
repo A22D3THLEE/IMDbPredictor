@@ -11,6 +11,9 @@ from predict.models import PredResults
 from keras.models import load_model
 from nltk import word_tokenize
 from keras.preprocessing.text import Tokenizer
+from predict.load_data import load
+
+dictionary= load()
 
 
 def predict(request):
@@ -21,12 +24,6 @@ def predict_chances(request):
     if request.POST.get('action') == 'post':
       text = request.POST.get('review')
     if len(text) != 0:
-      train = pd.read_csv('train.csv', header=None, names=['Review'])
-      reviews = train['Review']
-      tokenizer = Tokenizer(num_words=10000)
-      tokenizer.fit_on_texts(reviews)
-      dictionary = tokenizer.word_index
-
       text = text.lower()
 
       for p in string.punctuation:
