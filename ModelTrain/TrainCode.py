@@ -40,3 +40,5 @@ history = model.fit(x_train,
                     batch_size=128,
                     validation_split=0.1,
                     callbacks=[checkpoint_callback])
+
+
