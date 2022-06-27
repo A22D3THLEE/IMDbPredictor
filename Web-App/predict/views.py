@@ -14,7 +14,8 @@ from keras.preprocessing.text import Tokenizer
 from predict.load_data import load
 
 dictionary= load()
-
+nlp = spacy.load("en_core_web_sm")
+stop_words = set(stopwords.words('english'))
 
 def predict(request):
     return render(request, 'predict.html')
