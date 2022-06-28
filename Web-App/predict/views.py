@@ -14,7 +14,7 @@ from predict.load_data import load
 dictionary= load()
 nlp = spacy.load("en_core_web_sm")
 stop_words = set(stopwords.words('english'))
-
+stop_words.remove('not')
 def predict(request):
     return render(request, 'predict.html')
 
@@ -29,7 +29,7 @@ def predict_chances(request):
         if p in text:
             text = text.replace(p, '')
 
-      nlp = spacy.load("en_core_web_sm")
+     
       doc = nlp(text)
       lemma_tokens = []
       for token in doc:
@@ -37,9 +37,7 @@ def predict_chances(request):
       lemmatize_text = ' '.join(map(str, lemma_tokens))
 
       tokenize_text = word_tokenize(lemmatize_text)
-
-      stop_words = set(stopwords.words('english'))
-      stop_words.remove('not')
+      
       filtered_sentence = []
       for w in tokenize_text:
         if w not in stop_words:
